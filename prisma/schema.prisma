@@ -42,12 +42,13 @@ model MenuItem {
 }
 
 model Orders {
-  id        String      @id @default(uuid())
-  createdAt DateTime    @default(now())
-  status    OrderStatus @default(PENDING)
-  items     OrderItem[]
-  cashierId String
-  cashier   Users?      @relation("CashierRelation", fields: [cashierId], references: [id])
+  id           String      @id @default(uuid())
+  createdAt    DateTime    @default(now())
+  status       OrderStatus @default(PENDING)
+  items        OrderItem[]
+  customerName String
+  cashierId    String
+  cashier      Users?      @relation("CashierRelation", fields: [cashierId], references: [id])
 }
 
 model OrderItem {
