@@ -1,5 +1,5 @@
-import  type { Prisma, Users } from "@prisma/client";
+import type { Prisma, Users } from "@prisma/client";
 
 export interface UsersRepository {
-  create(user: Prisma.UsersCreateManyInput): Promise<Users>;
+  create(user: Prisma.UsersCreateInput): Promise<Users>;
 }
