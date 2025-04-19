@@ -17,4 +17,36 @@ export class InMemoryMenuItemRepository implements MenuItemsRepository {
     this.menuItem.push(menuItems);
     return menuItems;
   }
+
+  async findAll(): Promise<MenuItem[]> {
+    return this.menuItem;
+  }
+  async findById(menuId: string): Promise<MenuItem | null> {
+    const menuItem = this.menuItem.find((menu) => menu.id === menuId);
+
+    if (!menuItem) {
+      return null;
+    }
+
+    return menuItem;
+  }
+
+  async update(data: MenuItem): Promise<MenuItem> {
+    const index = this.menuItem.findIndex((item) => item.id === data.id);
+
+    if (index === -1) {
+      throw new Error("Menu item not found");
+    }
+
+    this.menuItem[index] = {
+      ...this.menuItem[index],
+      ...data,
+    };
+
+    return this.menuItem[index];
+  }
+
+  async delete(menuId: string): Promise<void> {
+    this.menuItem.filter((menu) => menu.id === menuId);
+  }
 }
