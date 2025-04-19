@@ -38,4 +38,8 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
     return order;
   }
+
+  async findAll(): Promise<Orders[]> {
+    return this.orders;
+  }
 }
