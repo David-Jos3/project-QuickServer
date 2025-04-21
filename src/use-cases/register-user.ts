@@ -5,7 +5,7 @@ interface RegisterUserUseCaseRequest {
   name: string;
   email: string;
   password: string;
-  role: UserRoles;
+  userRoles: UserRoles;
 }
 
 interface RegisterUserUseCaseResponse {
@@ -19,13 +19,13 @@ export class RegisterUserUseCase {
     name,
     email,
     password,
-    role,
+    userRoles,
   }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
     const user = await this.usersRepository.create({
       name,
       email,
       password,
-      role,
+      role: userRoles,
     });
 
     return { user };
