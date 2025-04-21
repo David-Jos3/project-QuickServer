@@ -55,11 +55,11 @@ export class UpdateOrderStatusUseCase {
 
     if (allowedStatus !== status) {
       throw new Error(
-        `Status inválido. O status atual é ${orderExists.status} e o próximo status permitido é ${allowedStatus}`
+        "Status inválido, não foi  possível atualizar o status do pedido"
       );
     }
 
-    const order = await this.ordersRepository.updateStatus(orderId, status);
+    const order = await this.ordersRepository.updatedStatus(orderId, status);
 
     return { order };
   }
