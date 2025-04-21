@@ -3,14 +3,30 @@ import type { OrdersRepository } from "../orders-repository";
 import { prisma } from "../../lib/prisma-client";
 
 export class PrismaOrdersRepository implements OrdersRepository {
-  updateStatus(orderId: string, status: OrderStatus): Promise<Orders> {
-    throw new Error("Method not implemented.");
+  async findAll(): Promise<Orders[]> {
+    return await prisma.orders.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
   }
-  updatedStatus(): Promise<Orders> {
-    throw new Error("Method not implemented.");
+  async updatedStatus(orderId: string, status: OrderStatus): Promise<Orders> {
+    return await prisma.orders.update({
+      where: { id: orderId },
+      data: { status },
+    });
   }
-  findById(id: string): Promise<Orders | null> {
-    throw new Error("Method not implemented.");
+
+  async findById(id: string): Promise<Orders | null> {
+    const order = await prisma.orders.findUnique({
+      where: { id },
+    });
+
+    if (!order) {
+      return null;
+    }
+
+    return order;
   }
   async create(data: Orders): Promise<Orders> {
     return await prisma.orders.create({
