@@ -15,7 +15,7 @@ describe("Create user", () => {
       email: "davidgomes123@gmail.com",
       name: "David José",
       password: "1234567",
-      role: "Cozinha",
+      userRoles: "Cozinha",
     });
 
     expect(user.id).toEqual(expect.any(String));
