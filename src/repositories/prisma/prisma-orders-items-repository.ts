@@ -8,4 +8,26 @@ export class PrismaOrdersItemsRepository implements OrdersItemsRepository {
       data,
     });
   }
+
+  async findById(id: string): Promise<OrderItem | null> {
+    return await prisma.orderItem.findUnique({
+      where: {
+        id,
+      },
+      include: { order: true, item: true },
+    });
+  }
+  async delete(itemId: string): Promise<void> {
+    await prisma.orderItem.delete({
+      where: {
+        id: itemId,
+      },
+    });
+  }
+
+  async list(): Promise<OrderItem[]> {
+    return await prisma.orderItem.findMany({
+      include: { order: true, item: true },
+    });
+  }
 }
