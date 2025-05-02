@@ -25,10 +25,9 @@ describe("Get order Item By Id", () => {
     });
 
     const result = await getOrderItemByIdUseCase.execute({
-      orderId: orderItem.id,
+      orderItemId: orderItem.id,
     });
 
     expect(result.orderItem).toEqual(orderItem);
-    expect(result.orderItem.id).toEqual(orderItem.id);
   });
 });
