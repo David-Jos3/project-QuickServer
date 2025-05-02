@@ -28,7 +28,7 @@ describe("Delete Menu Item Use Case", () => {
       menuId: menuItem.id,
     });
 
-    const deletedItem = inMemoryMenuItemRepository.findById(menuItem.id);
+    const deletedItem = await inMemoryMenuItemRepository.findById(menuItem.id);
 
     expect(deletedItem).toBeNull();
   });
