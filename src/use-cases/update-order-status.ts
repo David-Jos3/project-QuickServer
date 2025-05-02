@@ -26,23 +26,18 @@ export class UpdateOrderStatusUseCase {
       throw new Error("Pedido não encontrado");
     }
 
-    if (
-      (orderExists.status === OrderStatus.PENDING ||
-        orderExists.status === OrderStatus.IN_PROGRESS) &&
-      userRole !== UserRoles.Cozinha
-    ) {
+    if (status === OrderStatus.IN_PROGRESS && userRole !== UserRoles.Cozinha) {
       throw new Error(
-        "Apenas o usuário da cozinha pode alterar o status do pedido"
+        "Apenas a cozinha pode mover o pedido para 'IN_PROGRESS'"
       );
     }
 
-    if (
-      orderExists.status === OrderStatus.READY &&
-      userRole !== UserRoles.Caixa
-    ) {
-      throw new Error(
-        "Apenas o usuário do caixa pode alterar o status do pedido"
-      );
+    if (status === OrderStatus.READY && userRole !== UserRoles.Cozinha) {
+      throw new Error("Apenas a cozinha pode mover o pedido para 'READY'");
+    }
+
+    if (status === OrderStatus.COMPLETED && userRole !== UserRoles.Caixa) {
+      throw new Error("Apenas o caixa pode completar o pedido");
     }
 
     const allowedTransitions: Record<OrderStatus, OrderStatus> = {
@@ -50,6 +45,7 @@ export class UpdateOrderStatusUseCase {
       IN_PROGRESS: OrderStatus.READY,
       READY: OrderStatus.COMPLETED,
       COMPLETED: OrderStatus.COMPLETED,
+      CANCELED: OrderStatus.CANCELED,
     };
     const allowedStatus = allowedTransitions[orderExists.status];
 
@@ -59,7 +55,7 @@ export class UpdateOrderStatusUseCase {
       );
     }
 
-    const order = await this.ordersRepository.updatedStatus(orderId, status);
+    const order = await this.ordersRepository.updateStatus(orderId, status);
 
     return { order };
   }
