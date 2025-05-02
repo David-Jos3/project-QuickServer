@@ -20,6 +20,6 @@ export class CancelOrderUseCase {
       throw new CannotCancelOrderError();
     }
 
-    await this.ordersRepository.updatedStatus(orderId, "CANCELED");
+    await this.ordersRepository.updateStatus(orderId, "CANCELED");
   }
 }
