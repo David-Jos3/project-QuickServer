@@ -12,7 +12,7 @@ const userBodySchema = z.object({
 });
 
 export class RegisterUserController {
-  async register(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { email, name, password, userRoles } = userBodySchema.parse(
       request.body
     );
