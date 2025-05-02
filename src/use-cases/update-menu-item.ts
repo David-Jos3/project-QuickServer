@@ -1,12 +1,13 @@
 import type { MenuItem } from "@prisma/client";
 import type { MenuItemsRepository } from "../repositories/menu-items-repository";
+import { MenuNotFoundError } from "./errors/menu-not-found-error";
 
 interface UpdateMenuItemUseCaseRequest {
   menuId: string;
   name: string;
   description?: string;
   price: number;
-  image: string;
+  imageUrl: string;
 }
 
 interface UpdateMenuItemUseCaseResponse {
@@ -21,18 +22,18 @@ export class UpdateMenuItemUseCase {
     name,
     description,
     price,
-    image,
+    imageUrl,
   }: UpdateMenuItemUseCaseRequest): Promise<UpdateMenuItemUseCaseResponse> {
     const menuItem = await this.menuItemsReposiotry.findById(menuId);
 
     if (!menuItem) {
-      throw new Error("Menu item not found");
+      throw new MenuNotFoundError();
     }
 
     menuItem.name = name;
     menuItem.description = description ?? null;
     menuItem.price = price;
-    menuItem.image = image ?? null;
+    menuItem.image = imageUrl ?? null;
 
     const updatedMenuItem = await this.menuItemsReposiotry.update(menuItem);
 
