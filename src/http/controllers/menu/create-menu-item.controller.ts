@@ -11,7 +11,7 @@ const menuItemBodySchema = z.object({
 });
 
 export class CreateMenuItemController {
-  async create(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { name, description, price, imageUrl } = menuItemBodySchema.parse(
       request.body
     );

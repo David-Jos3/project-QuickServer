@@ -4,13 +4,13 @@ import { CreateOrdersItemsUseCase } from "../../../use-cases/create-orders-items
 import { z, ZodError } from "zod";
 
 const ordersItemBodySchema = z.object({
-  orderId: z.string(),
+  orderId: z.string().uuid(),
   itemId: z.string(),
   quantity: z.number().min(1),
 });
 
 export class CreateOrdersItemsController {
-  async create(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { orderId, itemId, quantity } = ordersItemBodySchema.parse(
       request.body
     );

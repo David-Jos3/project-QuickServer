@@ -9,7 +9,7 @@ const orderBodySchema = z.object({
 });
 
 export class CreateOrdersController {
-  async create(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { cashierId, customerName } = orderBodySchema.parse(request.body);
 
     try {
