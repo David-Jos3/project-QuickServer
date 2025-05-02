@@ -1,4 +1,5 @@
 import type { MenuItemsRepository } from "../repositories/menu-items-repository";
+import { MenuNotFoundError } from "./errors/menu-not-found-error";
 
 interface DeleteMenuItemUseCaseRequest {
   menuId: string;
@@ -11,7 +12,7 @@ export class DeleteMenuItemUseCase {
     const menuExist = await this.menuItemsRepository.findById(menuId);
 
     if (!menuExist) {
-      throw new Error("Menu not found");
+      throw new MenuNotFoundError();
     }
 
     await this.menuItemsRepository.delete(menuId);
