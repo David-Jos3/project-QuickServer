@@ -1,4 +1,4 @@
-import { InMemoryOrdersItemsRepository } from "../../test/repositories/in-memory-order-item-repository";
+import { InMemoryOrdersItemsRepository } from "../../test/repositories/in-memory-orders-items-repository";
 import { CreateOrdersItemsUseCase } from "./create-orders-items";
 
 let inMemoryOrdersItemRepository: InMemoryOrdersItemsRepository;
