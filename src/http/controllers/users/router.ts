@@ -5,6 +5,6 @@ export function userRouter(app: Application) {
   const registerUserController = new RegisterUserController();
   app.post(
     "/users",
-    registerUserController.register.bind(registerUserController)
+    registerUserController.handle.bind(registerUserController)
   );
 }
