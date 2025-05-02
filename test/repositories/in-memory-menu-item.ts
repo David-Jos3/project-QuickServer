@@ -11,6 +11,8 @@ export class InMemoryMenuItemRepository implements MenuItemsRepository {
       name: data.name,
       description: data.description ?? null,
       price: data.price,
+      createdAt: new Date(),
+      updatedAt: new Date(),
       image: data.image ?? null,
     };
 
@@ -47,6 +49,6 @@ export class InMemoryMenuItemRepository implements MenuItemsRepository {
   }
 
   async delete(menuId: string): Promise<void> {
-    this.menuItem.filter((menu) => menu.id === menuId);
+    this.menuItem = this.menuItem.filter((menu) => menu.id !== menuId);
   }
 }
