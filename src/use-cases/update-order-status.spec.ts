@@ -55,7 +55,7 @@ describe("Update Order Status Use Case", () => {
         userRole: "Caixa",
       })
     ).rejects.toThrow(
-      new Error("Apenas o usuário da cozinha pode alterar o status do pedido")
+      new Error("Apenas a cozinha pode mover o pedido para 'IN_PROGRESS'")
     );
   });
 
@@ -83,9 +83,7 @@ describe("Update Order Status Use Case", () => {
         status: "COMPLETED",
         userRole: "Cozinha",
       })
-    ).rejects.toThrow(
-      new Error("Apenas o usuário do caixa pode alterar o status do pedido")
-    );
+    ).rejects.toThrow(new Error("Apenas o caixa pode completar o pedido"));
   });
 
   test("should throw an error when a Kitchen user tries to complete an order", async () => {
@@ -106,10 +104,6 @@ describe("Update Order Status Use Case", () => {
         status: "COMPLETED",
         userRole: "Cozinha",
       })
-    ).rejects.toThrow(
-      new Error(
-        "Status inválido, não foi  possível atualizar o status do pedido"
-      )
-    );
+    ).rejects.toThrow(new Error("Apenas o caixa pode completar o pedido"));
   });
 });
