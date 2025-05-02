@@ -5,12 +5,8 @@ import type { MenuItem, Prisma } from "@prisma/client";
 export class PrismaMenuItemsRepository implements MenuItemsRepository {
   async findAll(): Promise<MenuItem[]> {
     const menuItems = await prisma.menuItem.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        OrderItem: true,
-      },
+      orderBy: { createdAt: "desc" },
+      include: { OrderItem: true },
     });
 
     return menuItems;
@@ -18,6 +14,7 @@ export class PrismaMenuItemsRepository implements MenuItemsRepository {
   async findById(menuId: string): Promise<MenuItem | null> {
     const menuItem = await prisma.menuItem.findUnique({
       where: { id: menuId },
+      include: { OrderItem: true },
     });
 
     if (!menuItem) {
