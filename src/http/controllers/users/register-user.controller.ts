@@ -7,13 +7,14 @@ import { UserRoles } from "@prisma/client";
 const userBodySchema = z.object({
   name: z.string(),
   email: z.string().email(),
+  username: z.string().min(3).max(20),
   password: z.string(),
   userRoles: z.nativeEnum(UserRoles),
 });
 
 export class RegisterUserController {
   async handle(request: Request, response: Response) {
-    const { email, name, password, userRoles } = userBodySchema.parse(
+    const { email, name, password, username, userRoles } = userBodySchema.parse(
       request.body
     );
 
@@ -21,7 +22,13 @@ export class RegisterUserController {
       const prismaUserRepository = new PrismaUserRepository();
       const registerUserUseCase = new RegisterUserUseCase(prismaUserRepository);
 
-      await registerUserUseCase.execute({ email, name, password, userRoles });
+      await registerUserUseCase.execute({
+        email,
+        name,
+        username,
+        password,
+        userRoles,
+      });
 
       response.send({ message: "User created successfully" }).status(201);
     } catch (error) {
