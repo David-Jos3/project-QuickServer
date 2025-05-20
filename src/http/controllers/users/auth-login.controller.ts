@@ -21,7 +21,10 @@ export class AuthLoginController {
 
       const { user } = await authLoginUseCase.execute({ username, password });
 
-      const token = jwt.sign({}, env.JWT_PRIVATE_KEY, {
+      const privateKey = Buffer.from(env.JWT_PRIVATE_KEY, "base64");
+
+      const token = jwt.sign({}, privateKey, {
+        algorithm: "RS256",
         subject: user.id,
         expiresIn: "1d",
       });
