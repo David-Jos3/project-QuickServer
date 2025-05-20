@@ -10,7 +10,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
       },
     });
   }
-  async updatedStatus(orderId: string, status: OrderStatus): Promise<Orders> {
+  async updateStatus(orderId: string, status: OrderStatus): Promise<Orders> {
     return await prisma.orders.update({
       where: { id: orderId },
       data: { status },
