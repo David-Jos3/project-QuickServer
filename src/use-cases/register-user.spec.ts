@@ -13,6 +13,7 @@ describe("Create user", () => {
   test("Should be able to create new users", async () => {
     const { user } = await registerUserUseCase.execute({
       email: "davidgomes123@gmail.com",
+      username: "davidjose01",
       name: "David José",
       password: "1234567",
       userRoles: "Cozinha",
